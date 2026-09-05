@@ -70,8 +70,17 @@ correctly, so they are listed here as evidence rather than as bugs:
 
 ## Not tested
 
-* The **player-victory** ending was only covered by the automated tests
-  (`tests/game.test.js`), not by a manual browser play-through — the recorded
-  browser match ended in a computer victory.
 * Easy mode's "does not chase" behaviour was observed in play, not measured
   statistically in the browser (it is covered by the simulation above).
+
+## Re-test after the fixes
+
+Both fixes were re-checked in the browser:
+
+* With the mouse held still, placing a ship immediately shows the next ship's
+  preview, and **Rotate ship** flips it without moving the pointer.
+* Pressing **New game** 104 ms after a shot and starting a new battle 403 ms
+  later produced exactly one computer reply, 703 ms after the new shot — the
+  old timer no longer fires.
+* A full match was also won by the player (31 shots): "You win!" is shown, all
+  17 enemy fleet cells are revealed, and later clicks change nothing.
