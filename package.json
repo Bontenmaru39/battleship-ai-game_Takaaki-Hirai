@@ -1,0 +1,15 @@
+{
+  "name": "battleship-ai-game",
+  "version": "1.0.0",
+  "description": "Browser Battleship game: human vs AI. Plain HTML, CSS and JavaScript.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  }
+}
