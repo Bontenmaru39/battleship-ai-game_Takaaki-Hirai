@@ -29,6 +29,8 @@ const restartButton = document.getElementById('restart-button');
 let game = createGame(difficultyEl.value);
 let orientation = HORIZONTAL;
 let aiThinking = false; // true while the computer's shot is on a short delay
+let aiTimer = null; // id of the pending "computer is thinking" timer
+let hoveredCell = null; // cell the mouse is over, used for the placement preview
 
 // --- drawing -------------------------------------------------------------
 
@@ -108,6 +110,9 @@ function render() {
   }
 
   statusEl.textContent = statusText();
+
+  // Redrawing wipes the preview, so put it back under the mouse pointer.
+  if (hoveredCell !== null) showPreview(hoveredCell.x, hoveredCell.y);
 }
 
 function statusText() {
@@ -128,6 +133,7 @@ function statusText() {
 // --- placement preview ---------------------------------------------------
 
 function showPreview(x, y) {
+  hoveredCell = { x, y };
   if (game.phase !== PLACEMENT) return;
   const ship = nextShipToPlace(game);
   if (ship === null) return;
@@ -141,6 +147,7 @@ function showPreview(x, y) {
 }
 
 function clearPreview() {
+  hoveredCell = null;
   playerBoardEl.querySelectorAll('.cell').forEach((el) => {
     el.classList.remove('preview', 'invalid');
   });
@@ -168,7 +175,8 @@ function handleEnemyBoardClick(x, y) {
 
   aiThinking = true;
   render();
-  window.setTimeout(() => {
+  aiTimer = window.setTimeout(() => {
+    aiTimer = null;
     aiFire(game);
     aiThinking = false;
     render();
@@ -176,6 +184,11 @@ function handleEnemyBoardClick(x, y) {
 }
 
 function newGame() {
+  // Drop a shot that the previous game had already scheduled.
+  if (aiTimer !== null) {
+    window.clearTimeout(aiTimer);
+    aiTimer = null;
+  }
   game = createGame(difficultyEl.value);
   orientation = HORIZONTAL;
   aiThinking = false;
@@ -184,7 +197,6 @@ function newGame() {
 
 rotateButton.addEventListener('click', () => {
   orientation = orientation === HORIZONTAL ? VERTICAL : HORIZONTAL;
-  clearPreview();
   render();
 });
 
