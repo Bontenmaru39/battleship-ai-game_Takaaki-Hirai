@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Battleship — Human vs AI</title>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Battleship</h1>
+      <p class="subtitle">You against the computer. Sink all five enemy ships first.</p>
+    </header>
+
+    <section class="controls">
+      <label for="difficulty">AI difficulty</label>
+      <select id="difficulty">
+        <option value="easy">Easy — fires at random</option>
+        <option value="normal" selected>Normal — hunts and targets</option>
+      </select>
+
+      <button id="rotate-button" type="button">Rotate ship (horizontal)</button>
+      <button id="random-button" type="button">Place my ships randomly</button>
+      <button id="start-button" type="button" disabled>Start battle</button>
+      <button id="restart-button" type="button">New game</button>
+    </section>
+
+    <p id="status" class="status">Place your Carrier (5 cells): click a square on your board.</p>
+
+    <main class="boards">
+      <section>
+        <h2>Your fleet</h2>
+        <div id="player-board" class="board" aria-label="Your board"></div>
+      </section>
+      <section>
+        <h2>Enemy waters</h2>
+        <div id="enemy-board" class="board" aria-label="Enemy board"></div>
+      </section>
+    </main>
+
+    <section class="log-area">
+      <h2>Battle log</h2>
+      <ul id="log"></ul>
+    </section>
+
+    <script type="module" src="src/ui.js"></script>
+  </body>
+</html>
